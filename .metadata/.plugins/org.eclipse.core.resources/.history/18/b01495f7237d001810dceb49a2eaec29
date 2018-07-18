@@ -1,0 +1,69 @@
+package hospital;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+
+public class Show_patient_final extends JFrame {
+
+	private JPanel contentPane;
+
+	
+	
+	public Show_patient_final(ArrayList<MongoParameterPasser> list) {
+		KEY k=new KEY();
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("PATIENT ID");
+		lblNewLabel.setBounds(44, 22, 135, 15);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblPatientName = new JLabel("PATIENT NAME");
+		lblPatientName.setBounds(44, 70, 125, 15);
+		contentPane.add(lblPatientName);
+		
+		JLabel lblNewLabel_1 = new JLabel("ROOM NO");
+		lblNewLabel_1.setBounds(44, 111, 112, 34);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblDisease = new JLabel("DISEASE");
+		lblDisease.setBounds(44, 173, 70, 15);
+		contentPane.add(lblDisease);
+		
+		JLabel lblMedicine = new JLabel("MEDICINE");
+		lblMedicine.setBounds(44, 216, 70, 15);
+		contentPane.add(lblMedicine);
+		
+		JLabel L1 = new JLabel("New label");
+		L1.setBounds(257, 22, 70, 15);
+		contentPane.add(L1);
+		
+		JLabel L2 = new JLabel("New label");
+		L2.setBounds(257, 70, 70, 15);
+		contentPane.add(L2);
+		
+		JLabel L3 = new JLabel("L");
+		L3.setBounds(257, 111, 70, 15);
+		contentPane.add(L3);
+		
+		JLabel L4 = new JLabel("New label");
+		L4.setBounds(257, 153, 70, 15);
+		contentPane.add(L4);
+		
+		JLabel L5 = new JLabel("New label");
+		L5.setBounds(257, 216, 70, 15);
+		contentPane.add(L5);
+		setVisible(true);
+	}
+
+}

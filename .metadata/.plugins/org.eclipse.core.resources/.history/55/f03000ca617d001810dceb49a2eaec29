@@ -1,0 +1,264 @@
+package hospital;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.Cursor;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author wolf
+ */
+public class search {
+   KEY k=new KEY();
+   AES  aes=new AES(k.key);
+   private	MongoClient mg;
+  // public ArrayList<MongoParameterPasser> l1=new ArrayList<>();
+   //public  ArrayList<MongoParameterPasser> l2=new ArrayList<>();
+   //public ArrayList<MongoParameterPasser> l3=new ArrayList<>();
+   //public ArrayList<MongoParameterPasser> l4=new ArrayList<>();
+  // MongoParameterPasser obj= new MongoParameterPasser();
+   	search()
+	{
+		mg=new MongoClient("localhost",27017);
+	}
+   public ArrayList<MongoParameterPasser> search1(MongoParameterPasser obj) throws Exception
+    {
+        
+        DB dbs=mg.getDB("Hospital");
+        DBCollection coll=dbs.getCollection("doctor");
+        ArrayList<MongoParameterPasser> mylist=new ArrayList<>();
+        BasicDBObject whereQuery = new BasicDBObject();
+	whereQuery.put("d_id",  obj.hased_did);
+        Cursor cur=coll.find(whereQuery);
+      
+        while(cur.hasNext())
+        {
+            MongoParameterPasser obj5=new MongoParameterPasser();
+            DBObject dbo=cur.next();
+            MongoParameterPasser obj1=new MongoParameterPasser();
+            MongoParameterPasser obj2=new MongoParameterPasser();
+            MongoParameterPasser obj3=new MongoParameterPasser();
+          //  String dec=aes.decrypt((String) dbo.get("p_id"));
+            //Hasher h=new Hasher();
+            //String hid3=h.HashingFunction(dec, 2);
+            //String hid2=h.HashingFunction(dec, 3);
+            //String hid1=h.HashingFunction(dec, 4);
+            //obj3.patient_id=hid3;
+            //obj2.patient_id=hid2;
+            //obj1.patient_id=hid1;
+            obj5.encrypted_patient_id=(String)dbo.get("p_id");
+            mylist.add(obj5);
+           // l4.add(obj);
+           //l3.add(obj3);
+           //l2.add(obj2);
+           //l1.add(obj1);
+
+        }
+                   //System.out.println(l3.get(0).patient_id);
+      //  Stringdb.collection.find( { qty: { $gt: 4 } } );
+
+        return mylist;
+    
+    }
+        MongoParameterPasser Patient3(String enc_id) throws Exception{
+            KEY key=new KEY();
+            AES aes=new AES(key.key);
+            Hasher h=new Hasher();
+            String dec_ed=(String)aes.decrypt(enc_id);
+            String hid=h.HashingFunction(dec_ed,4);
+            DB dbs=mg.getDB("Hospital");
+            DBCollection coll=dbs.getCollection("Patient3");
+           // ArrayList<MongoParameterPasser> mylist=new ArrayList<>();
+           // int sz=l1.size();
+                BasicDBObject whereQuery = new BasicDBObject();
+                whereQuery.put("patient_id", hid);
+                Cursor cur=coll.find(whereQuery);
+                MongoParameterPasser obj=new MongoParameterPasser();
+                
+                while(cur.hasNext())
+                {
+                    // System.out.print("sad");
+                    DBObject dbo=cur.next();
+                    obj.encrypted_disease=(String) dbo.get("disease");
+                    //mylist.add(obj);
+                    //System.out.println(obj.disease);
+                }             
+       return obj;
+   }
+        
+        MongoParameterPasser Patient2(String enc_id) throws Exception{
+            KEY key=new KEY();
+            AES aes=new AES(key.key);
+            Hasher h=new Hasher();
+            String dec_ed=(String)aes.decrypt(enc_id);
+            String hid=h.HashingFunction(dec_ed,3);
+            DB dbs=mg.getDB("Hospital");
+            DBCollection coll=dbs.getCollection("Patient2");
+            //ArrayList<MongoParameterPasser> mylist=new ArrayList<>();
+            //int sz=l1.size();
+                BasicDBObject whereQuery = new BasicDBObject();
+                whereQuery.put("patient_id", hid);
+                Cursor cur=coll.find(whereQuery);
+                MongoParameterPasser obj=new MongoParameterPasser();
+                
+                while(cur.hasNext())
+                {
+                    // System.out.print("sad");
+                    DBObject dbo=cur.next();
+                    obj.encrypted_meds=(String) dbo.get("medicine");
+                    obj.encrypted_patient_id=enc_id;
+                    //mylist.add(obj);
+                    //System.out.println(obj.disease);
+                }             
+       return obj;
+   }
+
+        MongoParameterPasser Patient1(String enc_id) throws Exception{
+            KEY key=new KEY();
+            AES aes=new AES(key.key);
+            Hasher h=new Hasher();
+            String dec_ed=(String)aes.decrypt(enc_id);
+            String hid=h.HashingFunction(dec_ed,2);
+            DB dbs=mg.getDB("Hospital");
+            DBCollection coll=dbs.getCollection("Patient1");
+           // ArrayList<MongoParameterPasser> mylist=new ArrayList<>();
+           // int sz=l1.size();
+                BasicDBObject whereQuery = new BasicDBObject();
+                whereQuery.put("patient_id", hid);
+                Cursor cur=coll.find(whereQuery);
+                MongoParameterPasser obj=new MongoParameterPasser();
+                
+                while(cur.hasNext())
+                {
+                    // System.out.print("sad");
+                    DBObject dbo=cur.next();
+                    obj.encrypted_p_name=(String) dbo.get("name");
+                    obj.encrypted_room_no=(String) dbo.get("room_no");
+                    //mylist.add(obj);
+                    //System.out.println(obj.disease);
+                }             
+       return obj;
+   }
+MongoParameterPasser show_id_name_disease(String encrypted_id) throws Exception {
+    MongoParameterPasser mpp=new MongoParameterPasser();
+    //ArrayList<MongoParameterPasser> list=search1(mpp);
+    DB dbs=mg.getDB("Hospital");
+    KEY key=new KEY();
+    AES aes=new AES(key.key);
+    String dec_id=aes.decrypt(encrypted_id);
+    Hasher h=new Hasher();
+    String hashP1=h.HashingFunction(dec_id, 2);
+    String hashP3=h.HashingFunction(dec_id, 4);
+    DBCollection coll3=dbs.getCollection("Patient3");
+    DBCollection coll1=dbs.getCollection("Patient1");
+    /*int sz1=l1.size();
+    int sz2=l2.size();
+    int sz3=l3.size();
+    int sz4=l4.size();*/
+    //ArrayList<MongoParameterPasser> mylist=new ArrayList<>();
+    MongoParameterPasser obj=new MongoParameterPasser();
+  //  for(int i=0;i<sz4;i++) {
+        //obj.encrypted_patient_id=l4.get(i).patient_id;
+       // System.out.println(l4.get(i).encrypted_patient_id);
+        //mylist.add(obj);
+    //}
+       // for(int i=0;i<sz3;i++){
+          //  System.out.println("sad");
+           //String s=l3.get(i).patient_id;
+     //      String hid3=h.HashingFunction(s, 2);
+           BasicDBObject whereQuery1 = new BasicDBObject();
+           whereQuery1.put("patient_id", hashP1);
+           Cursor cur1=coll1.find(whereQuery1);
+        while(cur1.hasNext())
+        {
+            DBObject dbo=cur1.next();
+            obj.encrypted_p_name=(String) dbo.get("name");
+            //mylist.add(obj);
+        }             
+       //}
+       //for(int i=0;i<sz1;i++){
+                           
+           //String s=l1.get(i).patient_id;
+     //      String hid3=h.HashingFunction(s, 2);
+           BasicDBObject whereQuery2 = new BasicDBObject();
+           whereQuery2.put("patient_id", hashP3);
+           Cursor cur2=coll3.find(whereQuery2);
+        while(cur2.hasNext())
+        {
+            // System.out.print("sad");
+            DBObject dbo=cur2.next();
+            obj.encrypted_disease=(String) dbo.get("disease");
+           // mylist.add(obj);
+            //System.out.println(obj.disease);
+        } 
+        obj.encrypted_patient_id=encrypted_id;
+       //}
+       return obj;
+    
+	}        
+	ArrayList<MongoParameterPasser> guest_show(){
+		ArrayList<MongoParameterPasser> mylist=new ArrayList<>();
+        DB dbs=mg.getDB("Hospital");
+        DBCollection coll=dbs.getCollection("Patient1");
+        Cursor cur=coll.find();
+        while(cur.hasNext())
+        {
+        	MongoParameterPasser m=new MongoParameterPasser();
+        	DBObject dbo=cur.next();
+        	m.encrypted_patient_id=(String) dbo.get("patient_id");
+        	m.encrypted_p_name=(String) dbo.get("name");
+        	m.encrypted_room_no=(String) dbo.get("room_no");
+        	mylist.add(m);
+        }
+        return mylist;
+   
+	}
+	int count(String disease) {
+        KEY key=new KEY();
+        AES aes=new AES(key.key);
+        DB dbs=mg.getDB("Hospital");
+        DBCollection coll=dbs.getCollection("Patient3");
+        int c=0;
+        String enc;
+        try {
+			 enc=aes.encrypt(disease);
+	           BasicDBObject whereQuery1 = new BasicDBObject();
+	           whereQuery1.put("disease", enc);
+	           Cursor cur=coll.find(whereQuery1);
+	           while(cur.hasNext())
+	           {
+	        	   DBObject dbo=cur.next();
+	        	   c++;
+	           }
+			 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return -1;
+		}
+        return c;
+        
+	}
+	ArrayList<MongoParameterPasser> nurse_pids(String nid){
+		ArrayList<MongoParameterPasser> mylist=new ArrayList<>();
+		Hasher h=new Hasher();
+		String hashid=h.HashingFunction(nid,1);
+        DB dbs=mg.getDB("Hospital");
+        DBCollection coll=dbs.getCollection("NursePatient");
+        BasicDBObject whereQuery = new BasicDBObject();
+        whereQuery.put("nurse_id",hashid);
+        Cursor cur=coll.find(whereQuery);
+        while(cur.hasNext())
+        {
+        	DBObject dbo=cur.next();
+        	MongoParameterPasser obj=new MongoParameterPasser();
+        	obj.encrypted_patient_id=(String)dbo.get("patient_id");
+        	mylist.add(obj);
+        }
+        return mylist;
+		
+	}
+}

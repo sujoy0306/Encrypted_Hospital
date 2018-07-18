@@ -1,0 +1,105 @@
+package hospital;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+public class nr_window extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField;
+	private String n_id;
+
+	/**
+	 * Create the frame.
+	 */
+	public nr_window(String s) {
+		n_id=s;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton show = new JButton("SHOW");
+		show.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String d=JOptionPane.showInputDialog("Enter the Nurse Id");
+				KEY k=new KEY();
+				AES as=new AES(k.key);
+				try {
+					String dec=as.decrypt(n_id);
+					if(!d.equals(dec)) {
+						String ans="Invallid Nurse Id";
+						JTextArea output=new JTextArea(16,14);
+						output.setText(ans);
+						JOptionPane.showMessageDialog(null, ans," dialog box",JOptionPane.ERROR_MESSAGE );
+					//	frame.dispose();
+					}
+					else {
+						
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		show.setBounds(128, 47, 117, 25);
+		
+		contentPane.add(show);
+		
+		JButton SHOW_PATIENT_DETAILS = new JButton("SHOW_PATIENT DETAILS");
+		SHOW_PATIENT_DETAILS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String d=JOptionPane.showInputDialog("Enter the Nurse Id");
+				KEY k=new KEY();
+				AES as=new AES(k.key);
+				try {
+					String dec=as.decrypt(n_id);
+					if(!d.equals(dec)) {
+						String ans="Invallid Nurse Id";
+						JTextArea output=new JTextArea(16,14);
+						output.setText(ans);
+						JOptionPane.showMessageDialog(null, ans," dialog box",JOptionPane.ERROR_MESSAGE );
+					//	frame.dispose();
+					}
+					else {
+						MongoParameterPasser obj=new MongoParameterPasser();
+						
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		SHOW_PATIENT_DETAILS.setBounds(71, 187, 285, 25);
+		contentPane.add(SHOW_PATIENT_DETAILS);
+		
+		textField = new JTextField();
+		textField.setBounds(221, 115, 114, 19);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblPatientId = new JLabel("PATIENT ID");
+		lblPatientId.setBounds(86, 117, 117, 15);
+		contentPane.add(lblPatientId);
+		setVisible(true);
+	}
+
+}

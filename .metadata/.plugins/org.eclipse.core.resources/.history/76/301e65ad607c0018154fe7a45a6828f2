@@ -1,0 +1,54 @@
+package hospital;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+public class guest extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField patient_id;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					guest frame = new guest();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public guest() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		patient_id = new JTextField();
+		patient_id.setBounds(123, 61, 114, 19);
+		contentPane.add(patient_id);
+		patient_id.setColumns(10);
+		
+		JButton SHOW = new JButton("SHOW");
+		SHOW.setBounds(123, 133, 117, 25);
+		contentPane.add(SHOW);
+	}
+
+}

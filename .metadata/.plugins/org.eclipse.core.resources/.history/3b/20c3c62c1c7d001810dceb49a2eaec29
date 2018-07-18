@@ -1,0 +1,132 @@
+package hospital;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.DropMode;
+
+public class dr_window extends JFrame {
+
+	private JPanel MEDICINE;
+	private JTextField PATIENT_ID;
+	private JTextField textField;
+	private String d_id;
+	
+	public dr_window(String s) {
+		d_id=s;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		MEDICINE = new JPanel();
+		MEDICINE.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(MEDICINE);
+		MEDICINE.setLayout(null);
+		
+		JButton SHOW = new JButton("SHOW");
+		SHOW.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String d=JOptionPane.showInputDialog("Enter the Doctor Id");
+				KEY k=new KEY();
+				AES as=new AES(k.key);
+				try {
+					String dec=as.decrypt(d_id);
+					if(!d.equals(dec)) {
+						String ans="Invallid Doctor Id";
+						JTextArea output=new JTextArea(16,14);
+						output.setText(ans);
+						JOptionPane.showMessageDialog(null, ans," dialog box",JOptionPane.ERROR_MESSAGE );
+					//	frame.dispose();
+					}
+					else {
+						Hasher h=new Hasher();
+						MongoParameterPasser mp=new MongoParameterPasser();
+						mp.hased_did=h.HashingFunction(dec, 0);
+						search sc=new search();
+						sc.search1(mp);
+						ArrayList<MongoParameterPasser> list=new ArrayList<>();
+						list=sc.show_id_name_disease();
+						int n=list.size();
+						for(int i=0;i<n;i++) {
+							System.out.println(list.get(i).encrypted_patient_id+" "+list.get(i).encrypted_p_name+" "+list.get(i).encrypted_disease);
+						}
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		SHOW.setBounds(127, 12, 117, 25);
+		MEDICINE.add(SHOW);
+		PATIENT_ID = new JTextField();
+		PATIENT_ID.setBounds(55, 62, 114, 19);
+		MEDICINE.add(PATIENT_ID);
+		PATIENT_ID.setColumns(10);
+		
+		textField = new JTextField();
+		textField.setBounds(218, 62, 203, 25);
+		MEDICINE.add(textField);
+		textField.setColumns(10);
+		
+		JButton ADD_MED = new JButton("ADD_MED");
+		ADD_MED.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String d=JOptionPane.showInputDialog("Enter the Doctor Id");
+				KEY k=new KEY();
+				AES as=new AES(k.key);
+				try {
+					String dec=as.decrypt(d_id);
+					if(!d.equals(dec)) {
+						String ans="Invallid Doctor Id";
+						JTextArea output=new JTextArea(16,14);
+						output.setText(ans);
+						JOptionPane.showMessageDialog(null, ans," dialog box",JOptionPane.ERROR_MESSAGE );
+					//	frame.dispose();
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		ADD_MED.setBounds(138, 121, 117, 25);
+		MEDICINE.add(ADD_MED);
+		
+		JButton SHOW_PATIENT = new JButton("SHOW_PATIENT");
+		SHOW_PATIENT.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String d=JOptionPane.showInputDialog("Enter the Doctor Id");
+				KEY k=new KEY();
+				AES as=new AES(k.key);
+				try {
+					String dec=as.decrypt(d_id);
+					if(!d.equals(dec)) {
+						String ans="Invallid Doctor Id";
+						JTextArea output=new JTextArea(16,14);
+						output.setText(ans);
+						JOptionPane.showMessageDialog(null, ans," dialog box",JOptionPane.ERROR_MESSAGE );
+					//	frame.dispose();
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		SHOW_PATIENT.setBounds(109, 197, 193, 25);
+		MEDICINE.add(SHOW_PATIENT);
+		setVisible(true);
+	}
+}

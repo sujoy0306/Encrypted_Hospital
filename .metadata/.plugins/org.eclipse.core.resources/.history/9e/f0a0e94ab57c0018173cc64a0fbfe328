@@ -1,0 +1,108 @@
+package hospital;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
+public class Insert_patient extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField PATIENT_ID;
+	private JTextField PATIENT_NAME;
+	private JTextField ROOM_NO;
+	private JTextField DISEASE;
+	private JTextField MEDICINE;
+
+	
+
+	/**
+	 * Create the frame.
+	 */
+	public Insert_patient() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		PATIENT_ID = new JTextField();
+		PATIENT_ID.setBounds(254, 12, 114, 19);
+		contentPane.add(PATIENT_ID);
+		PATIENT_ID.setColumns(10);
+		
+		PATIENT_NAME = new JTextField();
+		PATIENT_NAME.setBounds(254, 43, 114, 19);
+		contentPane.add(PATIENT_NAME);
+		PATIENT_NAME.setColumns(10);
+		
+		ROOM_NO = new JTextField();
+		ROOM_NO.setBounds(254, 74, 114, 19);
+		contentPane.add(ROOM_NO);
+		ROOM_NO.setColumns(10);
+		
+		DISEASE = new JTextField();
+		DISEASE.setBounds(254, 115, 114, 19);
+		contentPane.add(DISEASE);
+		DISEASE.setColumns(10);
+		
+		MEDICINE = new JTextField();
+		MEDICINE.setBounds(254, 158, 114, 19);
+		contentPane.add(MEDICINE);
+		MEDICINE.setColumns(10);
+		
+		JButton ENTER = new JButton("ENTER");
+		ENTER.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MongoParameterPasser mp=new MongoParameterPasser();
+				MongoHandler mh=new MongoHandler();
+				Hasher h=new Hasher();
+				String pid=PATIENT_ID.getText();
+				String pname=PATIENT_NAME.getText();
+				String room=ROOM_NO.getText();
+				String disease=DISEASE.getText();
+				String med=MEDICINE.getText();
+				/*String hid1=h.HashingFunction(pid, 2);
+				String hid2=h.HashingFunction(pid, 3);
+				String hid3=h.HashingFunction(pid, 4);*/
+				mp.p_name=pname;
+				mp.room_no=room;
+				mp.meds=med;
+				mh.insert1(mp);
+				mh.insert2(mp);
+				mh.insert1(mp);
+			}
+		});
+		ENTER.setBounds(124, 237, 117, 25);
+		contentPane.add(ENTER);
+		
+		JLabel L1 = new JLabel("PATIENT ID");
+		L1.setBounds(55, 14, 151, 15);
+		contentPane.add(L1);
+		
+		JLabel lblPatientName = new JLabel("PATIENT NAME");
+		lblPatientName.setBounds(55, 45, 126, 15);
+		contentPane.add(lblPatientName);
+		
+		JLabel lblRoomNo = new JLabel("ROOM NO");
+		lblRoomNo.setBounds(65, 76, 70, 15);
+		contentPane.add(lblRoomNo);
+		
+		JLabel lblNewLabel = new JLabel("DISEASE");
+		lblNewLabel.setBounds(69, 107, 112, 25);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("MEDICINE");
+		lblNewLabel_1.setBounds(75, 160, 106, 15);
+		contentPane.add(lblNewLabel_1);
+		setVisible(true);
+	}
+}

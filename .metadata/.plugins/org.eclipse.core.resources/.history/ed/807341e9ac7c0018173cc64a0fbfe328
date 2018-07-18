@@ -1,0 +1,42 @@
+package hospital;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+public class Insert extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField Doctor_id;
+	private JTextField textField;
+
+
+	public Insert() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		Doctor_id = new JTextField();
+		Doctor_id.setBounds(55, 40, 114, 19);
+		contentPane.add(Doctor_id);
+		Doctor_id.setColumns(10);
+		
+		textField = new JTextField();
+		textField.setBounds(226, 40, 114, 19);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JButton ENTER = new JButton("ENTER");
+		ENTER.setBounds(148, 103, 117, 25);
+		contentPane.add(ENTER);
+		setVisible(true);
+	}
+}
